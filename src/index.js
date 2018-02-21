@@ -4,28 +4,38 @@
  */
 module.exports = function getLoveTrianglesCount(preferences = []) {
   var cntLoveTriangles = 0;
-      
-  var firstLover;
-  var secondLover;  
-  
-  var loverSearch = 3;
-  
-  for (var i = 0; i < preferences.length; i++) {
-    firstLover = preferences[i];
-    secondLover = preferences[firstLover-1];
-    
-    //console.log('i='+i+',firstLover='+firstLover+',secondLover='+secondLover);
+  var loverSearch = 3;  
 
-    if (preferences[secondLover-1] == i+1) {
-      cntLoveTriangles++;
-    }
+  var firstLover;
+  var nextLover;
+  
+  function compareNumeric(a, b) {
+    if (a > b) return 1;
+    if (a < b) return -1;
   }
   
+  var i = preferences.length;
+  preferences.sort();
+  
+  while (i--) {
+      if (preferences[i] == preferences[i-1]) {
+          preferences.splice(i, 1);
+      }
+  }
+  
+  preferences.sort(compareNumeric);
+  
+  preferences.forEach(function(firstLover, i, preferences) {
+    nextLover = preferences[i+1]-1;
+    //alert(firstLover+'='+nextLover+ " (массив:" + preferences + ")" );
+    
+    if(firstLover == nextLover) {
+      cntLoveTriangles++;
+    }
+  });
+  
   cntLoveTriangles = Math.floor(cntLoveTriangles/loverSearch);
-
+  
   return cntLoveTriangles;
 };
-
-let count = getLoveTrianglesCount([2, 3, 1]);
-  console.log(count); // 1
  
