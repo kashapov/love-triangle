@@ -4,38 +4,24 @@
  */
 module.exports = function getLoveTrianglesCount(preferences = []) {
   var cntLoveTriangles = 0;
-  var loverSearch = 3;  
-
+      
   var firstLover;
   var nextLover;
   
-  function compareNumeric(a, b) {
-    if (a > b) return 1;
-    if (a < b) return -1;
-  }
-  
-  var i = preferences.length;
-  preferences.sort();
-  
-  while (i--) {
-      if (preferences[i] == preferences[i-1]) {
-          preferences.splice(i, 1);
-      }
-  }
-  
-  preferences.sort(compareNumeric);
-  
-  preferences.forEach(function(firstLover, i, preferences) {
-    nextLover = preferences[i+1]-1;
-    //alert(firstLover+'='+nextLover+ " (массив:" + preferences + ")" );
+  for (var i=0; i<preferences.length; i++) {
+    firstLover = preferences[i-1];
+    nextLover = firstLover-1;
     
-    if(firstLover == nextLover) {
-      cntLoveTriangles++;
+    //alert(firstLover+'-'+nextLover+ " (массив:" + preferences + ")" );
+    
+    if (firstLover != preferences[nextLover]) {
+      if (i == (preferences[preferences[nextLover]-1])) {
+        //alert('+');
+        cntLoveTriangles++;
+        preferences[i-1] = '';
+      }
     }
-  });
-  
-  cntLoveTriangles = Math.floor(cntLoveTriangles/loverSearch);
-  
+  }
   return cntLoveTriangles;
 };
  
