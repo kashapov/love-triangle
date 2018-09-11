@@ -3,25 +3,24 @@
  * @returns number of love triangles
  */
 module.exports = function getLoveTrianglesCount(preferences = []) {
-  var cntLoveTriangles = 0;
-      
-  var firstLover;
-  var nextLover;
-  
-  for (var i=0; i<preferences.length; i++) {
-    firstLover = preferences[i-1];
-    nextLover = firstLover-1;
-    
-    //alert(firstLover+'-'+nextLover+ " (массив:" + preferences + ")" );
-    
-    if (firstLover != preferences[nextLover]) {
-      if (i == (preferences[preferences[nextLover]-1])) {
-        //alert('+');
-        cntLoveTriangles++;
-        preferences[i-1] = '';
-      }
+
+  let spichonees = [...preferences];
+  let loveTriangles = 0;
+  let curSpichonee;
+
+  for (let i = 0; i < spichonees.length; i++) {
+    curSpichonee = i + 1;
+
+    if (spichonees[i] === curSpichonee) {
+      continue;
+    }
+
+    if (spichonees[spichonees[spichonees[i] - 1] - 1] === curSpichonee) {
+      loveTriangles++;
+      spichonees[i] = '';
     }
   }
-  return cntLoveTriangles;
+
+  return loveTriangles;
 };
- 
+
